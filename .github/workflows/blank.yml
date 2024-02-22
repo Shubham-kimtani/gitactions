@@ -17,6 +17,7 @@ jobs:
         fetch-depth: 0
   Sonar-Scan:
     runs-on: ubuntu-latest
+    needs: Checkout-Repo
     steps:
     - name: checkout from git
       uses: actions/checkout@v3
@@ -25,6 +26,7 @@ jobs:
 
   Backend-CI:
     if: github.event_name == 'pull_request'
+    needs: Sonar-Scan
     runs-on: ubuntu-latest
     steps:
     - name: checkout from git
@@ -34,6 +36,7 @@ jobs:
 
   Backend-BlackDuck:
     runs-on: ubuntu-latest
+    needs: Backend-CI
     steps:
     - name: checkout from git
       uses: actions/checkout@v3
@@ -42,6 +45,7 @@ jobs:
 
   Backend-CD:
     if: ${{ github.event.pull_request.merged }}
+    needs: Backend-BlackDuck
     runs-on: ubuntu-latest
     steps:
     - name: checkout from git
