@@ -4,9 +4,9 @@ on:
     types: [opened, closed]
     branches:
     - develop
-  push:
-    branches:
-    - feature/*
+  # push:
+  #   branches:
+  #   - feature/*
 jobs:
   Checkout-Repo:
     runs-on: ubuntu-latest
